@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Outer Glow for Square Root and Spark -->
+    <path
+        android:fillColor="#1582FF"
+        android:fillAlpha="0.15"
+        android:pathData="M 18 53 L 29 53 L 37 72 L 49 33 L 83 33 L 83 48 L 52 48 L 40 82 L 26 82 L 18 53 Z" />
+
+    <!-- Square Root Symbol with Gradient -->
+    <path
+        android:pathData="M 22 56 L 27 56 L 34 72 L 46 38 L 80 38 L 80 43 L 49 43 L 37 77 L 29 77 L 22 56 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:endX="80"
+                android:endY="77"
+                android:startX="22"
+                android:startY="38"
+                android:type="linear">
+                <item android:color="#4F46E5" android:offset="0" />
+                <item android:color="#06B6D4" android:offset="1" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Glowing Variable 'X' -->
+    <path
+        android:pathData="M 54 48 L 62 58 L 70 48 L 73 51 L 65 61 L 73 71 L 70 74 L 62 64 L 54 74 L 51 71 L 59 61 L 51 51 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:endX="73"
+                android:endY="74"
+                android:startX="51"
+                android:startY="48"
+                android:type="linear">
+                <item android:color="#06B6D4" android:offset="0" />
+                <item android:color="#3B82F6" android:offset="1" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- AI Spark (Four Point Star) -->
+    <path
+        android:fillColor="#F59E0B"
+        android:pathData="M 68 23 C 68 26.5 69.5 28 73 28 C 69.5 28 68 29.5 68 33 C 68 29.5 66.5 28 63 28 C 66.5 28 68 26.5 68 23 Z" />
+
+    <!-- AI Spark Small -->
+    <path
+        android:fillColor="#10B981"
+        android:pathData="M 45 23 C 45 24.5 45.5 25 47 25 C 45.5 25 45 25.5 45 27 C 45 25.5 44.5 25 43 25 C 44.5 25 45 24.5 45 23 Z" />
+</vector>

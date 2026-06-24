@@ -1,0 +1,6 @@
+{
+  "name": "AI Math Coach",
+  "description": "An AI-powered math practice partner. Solve equations, generate practice papers, sketch equations, and get instant explanations with photo recognition!",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
