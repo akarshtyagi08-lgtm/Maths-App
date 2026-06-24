@@ -17,6 +17,24 @@ object GeminiMathService {
     private const val MODEL = "gemini-3.5-flash"
     private const val BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models/$MODEL:generateContent"
 
+    var customApiKey: String? = null
+
+    fun initialize(context: android.content.Context) {
+        val prefs = context.getSharedPreferences("gemini_math_prefs", android.content.Context.MODE_PRIVATE)
+        customApiKey = prefs.getString("custom_gemini_api_key", null)
+    }
+
+    fun saveCustomApiKey(context: android.content.Context, key: String?) {
+        val prefs = context.getSharedPreferences("gemini_math_prefs", android.content.Context.MODE_PRIVATE)
+        if (key.isNullOrBlank()) {
+            prefs.edit().remove("custom_gemini_api_key").apply()
+            customApiKey = null
+        } else {
+            prefs.edit().putString("custom_gemini_api_key", key).apply()
+            customApiKey = key
+        }
+    }
+
     private val client = OkHttpClient.Builder()
         .connectTimeout(60, TimeUnit.SECONDS)
         .readTimeout(60, TimeUnit.SECONDS)
@@ -33,8 +51,20 @@ object GeminiMathService {
         mimeType: String = "image/jpeg",
         forceJsonResponse: Boolean = false
     ): String = withContext(Dispatchers.IO) {
-        val apiKey = BuildConfig.GEMINI_API_KEY
-        if (apiKey.isBlank() || apiKey == "MY_GEMINI_API_KEY") {
+        val apiKey = if (!customApiKey.isNullOrBlank()) {
+            customApiKey!!
+        } else {
+            BuildConfig.GEMINI_API_KEY
+        }
+        val isPlaceholder = apiKey.isBlank() ||
+                apiKey == "MY_GEMINI_API_KEY" ||
+                apiKey == "YOUR_API_KEY" ||
+                apiKey == "GEMINI_API_KEY" ||
+                apiKey == "placeholder" ||
+                apiKey == "null" ||
+                apiKey.length < 10
+
+        if (isPlaceholder) {
             return@withContext "API_KEY_MISSING"
         }
 
@@ -97,6 +127,9 @@ object GeminiMathService {
             val respBody = response.body?.string() ?: ""
             if (!response.isSuccessful) {
                 Log.e(TAG, "API Error: HTTP ${response.code} - $respBody")
+                if (response.code == 400 && (respBody.contains("API_KEY_INVALID") || respBody.contains("API Key not found") || respBody.contains("INVALID_ARGUMENT"))) {
+                    return@withContext "API_KEY_MISSING"
+                }
                 return@withContext "Error: HTTP ${response.code}\n$respBody"
             }
 

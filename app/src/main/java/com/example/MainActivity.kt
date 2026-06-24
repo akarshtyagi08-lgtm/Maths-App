@@ -47,6 +47,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -199,6 +201,8 @@ fun DashboardScreen(viewModel: MathViewModel) {
     val streak = profile?.streakDays ?: 0
 
     var showGradeDialog by remember { mutableStateOf(false) }
+    val customApiKey by viewModel.customApiKey.collectAsState()
+    var showApiKeyDialog by remember { mutableStateOf(false) }
 
     if (showGradeDialog) {
         GradeSelectionDialog(
@@ -207,6 +211,21 @@ fun DashboardScreen(viewModel: MathViewModel) {
             onSelect = {
                 viewModel.setProfileGrade(it)
                 showGradeDialog = false
+            }
+        )
+    }
+
+    if (showApiKeyDialog) {
+        ApiKeySettingsDialog(
+            currentKey = customApiKey,
+            onDismiss = { showApiKeyDialog = false },
+            onSave = {
+                viewModel.saveCustomApiKey(it)
+                showApiKeyDialog = false
+            },
+            onClear = {
+                viewModel.clearCustomApiKey()
+                showApiKeyDialog = false
             }
         )
     }
@@ -241,20 +260,55 @@ fun DashboardScreen(viewModel: MathViewModel) {
                     )
                 }
 
-                // Grade Selector Badge
-                Box(
-                    modifier = Modifier
-                        .background(Color(0xFFEADDFF), RoundedCornerShape(20.dp))
-                        .clickable { showGradeDialog = true }
-                        .padding(horizontal = 12.dp, vertical = 8.dp)
+                // Header Action Badges
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    // API Key Settings Badge
+                    Box(
+                        modifier = Modifier
+                            .background(
+                                if (customApiKey.isNullOrBlank()) Color(0xFFFFDAD7) else Color(0xFFE8DEF8),
+                                RoundedCornerShape(20.dp)
+                            )
+                            .clickable { showApiKeyDialog = true }
+                            .padding(horizontal = 10.dp, vertical = 6.dp)
                     ) {
-                        Icon(Icons.Default.School, contentDescription = "Grade", tint = Color(0xFF21005D), modifier = Modifier.size(16.dp))
-                        Text(text = currentGrade, color = Color(0xFF21005D), fontSize = 12.sp, fontWeight = FontWeight.Bold)
-                        Icon(Icons.Default.ArrowDropDown, contentDescription = "Change", tint = Color(0xFF21005D), modifier = Modifier.size(16.dp))
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Icon(
+                                imageVector = if (customApiKey.isNullOrBlank()) Icons.Default.Lock else Icons.Default.CheckCircle,
+                                contentDescription = "API Key",
+                                tint = if (customApiKey.isNullOrBlank()) Color(0xFFBA1A1A) else Color(0xFF6750A4),
+                                modifier = Modifier.size(14.dp)
+                            )
+                            Text(
+                                text = if (customApiKey.isNullOrBlank()) "No Key" else "Key Active",
+                                color = if (customApiKey.isNullOrBlank()) Color(0xFFBA1A1A) else Color(0xFF6750A4),
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                    }
+
+                    // Grade Selector Badge
+                    Box(
+                        modifier = Modifier
+                            .background(Color(0xFFEADDFF), RoundedCornerShape(20.dp))
+                            .clickable { showGradeDialog = true }
+                            .padding(horizontal = 12.dp, vertical = 8.dp)
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Icon(Icons.Default.School, contentDescription = "Grade", tint = Color(0xFF21005D), modifier = Modifier.size(16.dp))
+                            Text(text = currentGrade, color = Color(0xFF21005D), fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                            Icon(Icons.Default.ArrowDropDown, contentDescription = "Change", tint = Color(0xFF21005D), modifier = Modifier.size(16.dp))
+                        }
                     }
                 }
             }
@@ -750,6 +804,79 @@ fun GradeSelectionDialog(
     )
 }
 
+@Composable
+fun ApiKeySettingsDialog(
+    currentKey: String?,
+    onDismiss: () -> Unit,
+    onSave: (String) -> Unit,
+    onClear: () -> Unit
+) {
+    var keyText by remember { mutableStateOf(currentKey ?: "") }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Icon(Icons.Default.Lock, contentDescription = "API Key Settings", tint = Color(0xFF6750A4))
+                Text("Gemini API Key Setup", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = Color(0xFF1C1B1F))
+            }
+        },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text(
+                    text = "Enter your personal Gemini API Key below to enable instant, unlimited AI practice exams, instant math grading, and tutor explanations.",
+                    fontSize = 13.sp,
+                    color = Color(0xFF49454F)
+                )
+
+                OutlinedTextField(
+                    value = keyText,
+                    onValueChange = { keyText = it },
+                    label = { Text("Gemini API Key") },
+                    singleLine = true,
+                    placeholder = { Text("AIzaSy...") },
+                    modifier = Modifier.fillMaxWidth().testTag("api_key_input_field"),
+                    shape = RoundedCornerShape(8.dp)
+                )
+
+                Text(
+                    text = "You can get a free API key at: ai.google.dev",
+                    fontSize = 12.sp,
+                    color = Color(0xFF6750A4),
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = { if (keyText.isNotBlank()) onSave(keyText) },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6750A4)),
+                shape = RoundedCornerShape(20.dp)
+            ) {
+                Text("Save Key", color = Color.White, fontWeight = FontWeight.Bold)
+            }
+        },
+        dismissButton = {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                if (!currentKey.isNullOrBlank()) {
+                    TextButton(
+                        onClick = onClear
+                    ) {
+                        Text("Clear Key", color = Color(0xFFBA1A1A), fontWeight = FontWeight.Bold)
+                    }
+                }
+                TextButton(onClick = onDismiss) {
+                    Text("Cancel", color = Color(0xFF6750A4))
+                }
+            }
+        },
+        containerColor = Color(0xFFF3EDF7)
+    )
+}
+
 // --- SOLVER SCREEN WITH DRAWING CANVAS ---
 @Composable
 fun SolverScreen(viewModel: MathViewModel) {
@@ -933,7 +1060,8 @@ fun SolverScreen(viewModel: MathViewModel) {
                         ) {
                             // Draw Grid background so it feels like math sheet notebook!
                             val step = 40.dp.toPx()
-                            for (x in 0..size.width.toInt() step step.toInt()) {
+                            val stepInt = step.toInt().coerceAtLeast(1)
+                            for (x in 0..size.width.toInt() step stepInt) {
                                 drawLine(
                                     color = Color(0xFFE2E8F0),
                                     start = Offset(x.toFloat(), 0f),
@@ -941,7 +1069,7 @@ fun SolverScreen(viewModel: MathViewModel) {
                                     strokeWidth = 1f
                                 )
                             }
-                            for (y in 0..size.height.toInt() step step.toInt()) {
+                            for (y in 0..size.height.toInt() step stepInt) {
                                 drawLine(
                                     color = Color(0xFFE2E8F0),
                                     start = Offset(0f, y.toFloat()),
@@ -1571,7 +1699,25 @@ fun ExamResultScreen(viewModel: MathViewModel) {
                         Text("AI Grader Coaching Report", color = Color(0xFF1C1B1F), fontSize = 16.sp, fontWeight = FontWeight.Bold)
                     }
 
-                    MarkdownText(text = currentPaper.feedbackJson ?: "Generating report card...")
+                    if (currentPaper.feedbackJson == "API_KEY_MISSING") {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(Color(0xFFFFDAD7), RoundedCornerShape(12.dp))
+                                .padding(12.dp)
+                        ) {
+                            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                                Text("🔑 API Key Missing", color = Color(0xFF410002), fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                                Text(
+                                    text = "Please enter your GEMINI_API_KEY into the Secrets panel in AI Studio UI to enable real-time grading and coaching reports.",
+                                    color = Color(0xFF410002),
+                                    fontSize = 12.sp
+                                )
+                            }
+                        }
+                    } else {
+                        MarkdownText(text = currentPaper.feedbackJson ?: "Generating report card...")
+                    }
                 }
             }
         }

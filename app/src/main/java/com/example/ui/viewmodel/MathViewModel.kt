@@ -49,6 +49,26 @@ class MathViewModel(application: Application) : AndroidViewModel(application) {
     private val mathDao = MathDatabase.getDatabase(application).mathDao()
     private val repository = MathRepository(mathDao)
 
+    // Custom API Key States
+    private val _customApiKey = MutableStateFlow<String?>(null)
+    val customApiKey: StateFlow<String?> = _customApiKey.asStateFlow()
+
+    init {
+        GeminiMathService.initialize(application)
+        _customApiKey.value = GeminiMathService.customApiKey
+    }
+
+    fun saveCustomApiKey(key: String) {
+        val cleanKey = key.trim()
+        GeminiMathService.saveCustomApiKey(getApplication(), cleanKey)
+        _customApiKey.value = cleanKey
+    }
+
+    fun clearCustomApiKey() {
+        GeminiMathService.saveCustomApiKey(getApplication(), null)
+        _customApiKey.value = null
+    }
+
     // Room flow state holders
     val savedQuestions: StateFlow<List<SavedQuestion>> = repository.allSavedQuestions
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
