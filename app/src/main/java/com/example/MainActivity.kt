@@ -70,7 +70,7 @@ class MainActivity : ComponentActivity() {
             MyApplicationTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = Color(0xFF080C14) // Clean Deep Space Dark Background
+                    color = Color(0xFFF6F2F7) // Bento Grid Style Light Lavender Background
                 ) {
                     MathAppContainer()
                 }
@@ -102,14 +102,14 @@ fun MathAppContainer() {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFF080C14))
+                .background(Color(0xFFF6F2F7))
                 .padding(innerPadding)
         ) {
             // Elegant background ambient glow circles
             Canvas(modifier = Modifier.fillMaxSize()) {
                 drawCircle(
                     brush = Brush.radialGradient(
-                        colors = listOf(Color(0x0F06B6D4), Color.Transparent),
+                        colors = listOf(Color(0x2FD0BCFF), Color.Transparent),
                         center = Offset(0f, 0f),
                         radius = size.width * 0.8f
                     ),
@@ -118,7 +118,7 @@ fun MathAppContainer() {
                 )
                 drawCircle(
                     brush = Brush.radialGradient(
-                        colors = listOf(Color(0x0B8B5CF6), Color.Transparent),
+                        colors = listOf(Color(0x2FFFD8E4), Color.Transparent),
                         center = Offset(size.width, size.height),
                         radius = size.width * 0.9f
                     ),
@@ -153,11 +153,11 @@ fun MathBottomNavigationBar(
     onNavigate: (MathScreen) -> Unit
 ) {
     NavigationBar(
-        containerColor = Color(0xFF0E1324),
+        containerColor = Color(0xFFF3EDF7),
         tonalElevation = 8.dp,
         modifier = Modifier
-            .border(0.5.dp, Color(0xFF1E293B), RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
-            .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+            .border(0.5.dp, Color(0xFFE7E0EC), RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp))
+            .clip(RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp))
     ) {
         val items = listOf(
             Triple(MathScreen.DASHBOARD, "Dashboard", Icons.Default.Dashboard),
@@ -173,11 +173,11 @@ fun MathBottomNavigationBar(
                 icon = { Icon(icon, contentDescription = label) },
                 label = { Text(label, fontSize = 11.sp, fontWeight = FontWeight.Bold) },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = Color(0xFF06B6D4),
-                    selectedTextColor = Color(0xFF06B6D4),
-                    indicatorColor = Color(0xFF1E2E4A),
-                    unselectedIconColor = Color(0xFF94A3B8),
-                    unselectedTextColor = Color(0xFF94A3B8)
+                    selectedIconColor = Color(0xFF1D192B),
+                    selectedTextColor = Color(0xFF1D192B),
+                    indicatorColor = Color(0xFFE8DEF8),
+                    unselectedIconColor = Color(0xFF49454F),
+                    unselectedTextColor = Color(0xFF49454F)
                 )
             )
         }
@@ -230,13 +230,13 @@ fun DashboardScreen(viewModel: MathViewModel) {
                     Text(
                         text = "Hello, Tyagi 👋",
                         fontSize = 14.sp,
-                        color = Color(0xFF94A3B8),
+                        color = Color(0xFF49454F),
                         fontWeight = FontWeight.Medium
                     )
                     Text(
                         text = "AI Math Practice",
                         fontSize = 26.sp,
-                        color = Color.White,
+                        color = Color(0xFF1C1B1F),
                         fontWeight = FontWeight.Black
                     )
                 }
@@ -244,7 +244,7 @@ fun DashboardScreen(viewModel: MathViewModel) {
                 // Grade Selector Badge
                 Box(
                     modifier = Modifier
-                        .background(Color(0xFF1E293B), RoundedCornerShape(12.dp))
+                        .background(Color(0xFFEADDFF), RoundedCornerShape(20.dp))
                         .clickable { showGradeDialog = true }
                         .padding(horizontal = 12.dp, vertical = 8.dp)
                 ) {
@@ -252,115 +252,232 @@ fun DashboardScreen(viewModel: MathViewModel) {
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
-                        Icon(Icons.Default.School, contentDescription = "Grade", tint = Color(0xFF06B6D4), modifier = Modifier.size(16.dp))
-                        Text(text = currentGrade, color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.Bold)
-                        Icon(Icons.Default.ArrowDropDown, contentDescription = "Change", tint = Color(0xFF94A3B8), modifier = Modifier.size(16.dp))
+                        Icon(Icons.Default.School, contentDescription = "Grade", tint = Color(0xFF21005D), modifier = Modifier.size(16.dp))
+                        Text(text = currentGrade, color = Color(0xFF21005D), fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                        Icon(Icons.Default.ArrowDropDown, contentDescription = "Change", tint = Color(0xFF21005D), modifier = Modifier.size(16.dp))
                     }
                 }
             }
         }
 
-        // Streak & Metric Cards
+        // BENTO GRID SECTION (Preserving all original actions & metrics in the Bento Grid)
         item {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                // Streak Card
-                Card(
+                // Left Column of Bento Grid
+                Column(
                     modifier = Modifier.weight(1f),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF131D35)),
-                    shape = RoundedCornerShape(16.dp)
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(6.dp)
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Icon(Icons.Default.LocalFireDepartment, contentDescription = "Streak", tint = Color(0xFFF59E0B), modifier = Modifier.size(24.dp))
-                            Text(text = "STREAK", fontSize = 11.sp, color = Color(0xFF94A3B8), fontWeight = FontWeight.Bold)
-                        }
-                        Text(
-                            text = "$streak Days",
-                            fontSize = 22.sp,
-                            color = Color.White,
-                            fontWeight = FontWeight.Black
-                        )
-                        Text(
-                            text = if (streak > 0) "Keep practicing daily!" else "Practice today to start a streak!",
-                            fontSize = 11.sp,
-                            color = Color(0xFF94A3B8)
-                        )
-                    }
-                }
-
-                // Accuracy Card
-                Card(
-                    modifier = Modifier.weight(1f),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF0E242C)),
-                    shape = RoundedCornerShape(16.dp)
-                ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(6.dp)
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Icon(Icons.Default.Percent, contentDescription = "Accuracy", tint = Color(0xFF10B981), modifier = Modifier.size(20.dp))
-                            Text(text = "ACCURACY", fontSize = 11.sp, color = Color(0xFF94A3B8), fontWeight = FontWeight.Bold)
-                        }
-                        Text(
-                            text = "$accuracy%",
-                            fontSize = 22.sp,
-                            color = Color.White,
-                            fontWeight = FontWeight.Black
-                        )
-                        Text(
-                            text = "$totalSolved Questions solved",
-                            fontSize = 11.sp,
-                            color = Color(0xFF94A3B8)
-                        )
-                    }
-                }
-            }
-        }
-
-        // Action Prompts
-        item {
-            Card(
-                onClick = { viewModel.navigateTo(MathScreen.SOLVER) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .testTag("solver_quickstart"),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFF141B30)),
-                border = BorderStroke(1.dp, Color(0xFF1E2E4A)),
-                shape = RoundedCornerShape(16.dp)
-            ) {
-                Row(
-                    modifier = Modifier.padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    Box(
+                    // Tall Card: Scan & Solve (Primary)
+                    Card(
+                        onClick = { viewModel.navigateTo(MathScreen.SOLVER) },
                         modifier = Modifier
-                            .size(48.dp)
-                            .background(Color(0xFF0F2D3A), CircleShape),
-                        contentAlignment = Alignment.Center
+                            .fillMaxWidth()
+                            .height(240.dp)
+                            .testTag("solver_quickstart"),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFD0BCFF)),
+                        shape = RoundedCornerShape(28.dp)
                     ) {
-                        Icon(Icons.Default.Draw, contentDescription = "Solve", tint = Color(0xFF06B6D4), modifier = Modifier.size(24.dp))
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            verticalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column {
+                                Box(
+                                    modifier = Modifier
+                                        .size(44.dp)
+                                        .background(Color(0xFFEADDFF), RoundedCornerShape(12.dp)),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        Icons.Default.PhotoCamera,
+                                        contentDescription = "Scan & Solve",
+                                        tint = Color(0xFF21005D),
+                                        modifier = Modifier.size(24.dp)
+                                    )
+                                }
+                                Spacer(modifier = Modifier.height(16.dp))
+                                Text(
+                                    text = "Scan & Solve",
+                                    color = Color(0xFF21005D),
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    lineHeight = 22.sp
+                                )
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(
+                                    text = "Instant step-by-step logic",
+                                    color = Color(0xFF381E72),
+                                    fontSize = 12.sp,
+                                    lineHeight = 16.sp
+                                )
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .background(Color.White.copy(alpha = 0.4f), RoundedCornerShape(12.dp))
+                                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                            ) {
+                                Text(
+                                    text = "Draw equations",
+                                    color = Color(0xFF21005D),
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        }
                     }
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text("Solve Math Problems with AI", color = Color.White, fontSize = 15.sp, fontWeight = FontWeight.Bold)
-                        Text("Type, click photo, or draw equations for instant step-by-step logic coaching.", color = Color(0xFF94A3B8), fontSize = 12.sp)
+
+                    // Quarters Action: Study Buddy / Streak tracker
+                    Card(
+                        onClick = { viewModel.navigateTo(MathScreen.STATS) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(150.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFC2E7FF)),
+                        shape = RoundedCornerShape(28.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            verticalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(36.dp)
+                                    .background(Color.White.copy(alpha = 0.4f), RoundedCornerShape(8.dp)),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    Icons.Default.Forum,
+                                    contentDescription = "Streak",
+                                    tint = Color(0xFF001D35),
+                                    modifier = Modifier.size(20.dp)
+                                )
+                            }
+                            Column {
+                                Text(
+                                    text = "Streak: $streak Days",
+                                    color = Color(0xFF001D35),
+                                    fontSize = 15.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Spacer(modifier = Modifier.height(2.dp))
+                                Text(
+                                    text = "AI Study Buddy active",
+                                    color = Color(0xFF001D35).copy(alpha = 0.7f),
+                                    fontSize = 11.sp
+                                )
+                            }
+                        }
                     }
-                    Icon(Icons.Default.ChevronRight, contentDescription = "Go", tint = Color(0xFF94A3B8))
+                }
+
+                // Right Column of Bento Grid
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    // Secondary Action: Generate Paper
+                    Card(
+                        onClick = { viewModel.navigateTo(MathScreen.GENERATOR) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(180.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFE1E2EC)),
+                        shape = RoundedCornerShape(28.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            verticalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(36.dp)
+                                    .background(Color.White.copy(alpha = 0.4f), RoundedCornerShape(8.dp)),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    Icons.Default.Description,
+                                    contentDescription = "Generate Paper",
+                                    tint = Color(0xFF44474E),
+                                    modifier = Modifier.size(20.dp)
+                                )
+                            }
+                            Column {
+                                Text(
+                                    text = "Generate Paper",
+                                    color = Color(0xFF1B1B1F),
+                                    fontSize = 15.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Spacer(modifier = Modifier.height(2.dp))
+                                Text(
+                                    text = "AI-tailored mocks",
+                                    color = Color(0xFF44474E),
+                                    fontSize = 11.sp
+                                )
+                            }
+                        }
+                    }
+
+                    // Tertiary Action: Live Grading / Accuracy
+                    Card(
+                        onClick = { viewModel.navigateTo(MathScreen.STATS) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(210.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFFFD8E4)),
+                        shape = RoundedCornerShape(28.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            verticalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(36.dp)
+                                    .background(Color.White.copy(alpha = 0.4f), RoundedCornerShape(8.dp)),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    Icons.Default.Analytics,
+                                    contentDescription = "Live Grading",
+                                    tint = Color(0xFF31111D),
+                                    modifier = Modifier.size(20.dp)
+                                )
+                            }
+                            Column {
+                                Text(
+                                    text = "Live Grading",
+                                    color = Color(0xFF31111D),
+                                    fontSize = 15.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Text(
+                                    text = "Accuracy: $accuracy%",
+                                    color = Color(0xFF31111D).copy(alpha = 0.8f),
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Spacer(modifier = Modifier.height(2.dp))
+                                Text(
+                                    text = "Track correctness",
+                                    color = Color(0xFF31111D).copy(alpha = 0.6f),
+                                    fontSize = 11.sp
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -372,9 +489,9 @@ fun DashboardScreen(viewModel: MathViewModel) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Your Generated Practice Exams", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                Text("Your Generated Practice Exams", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1C1B1F))
                 TextButton(onClick = { viewModel.navigateTo(MathScreen.GENERATOR) }) {
-                    Text("New Exam", color = Color(0xFF06B6D4), fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                    Text("New Exam", color = Color(0xFF6750A4), fontSize = 13.sp, fontWeight = FontWeight.Bold)
                 }
             }
         }
@@ -384,7 +501,8 @@ fun DashboardScreen(viewModel: MathViewModel) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color(0xFF0E1324), RoundedCornerShape(12.dp))
+                        .background(Color.White, RoundedCornerShape(20.dp))
+                        .border(1.dp, Color(0xFFE7E0EC), RoundedCornerShape(20.dp))
                         .padding(24.dp),
                     contentAlignment = Alignment.Center
                 ) {
@@ -392,9 +510,9 @@ fun DashboardScreen(viewModel: MathViewModel) {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Icon(Icons.Default.PostAdd, contentDescription = "Empty", tint = Color(0xFF475569), modifier = Modifier.size(36.dp))
-                        Text("No exams generated yet", color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold)
-                        Text("Generate a tailored multiple choice math test using AI!", color = Color(0xFF64748B), fontSize = 11.sp, textAlign = TextAlign.Center)
+                        Icon(Icons.Default.PostAdd, contentDescription = "Empty", tint = Color(0xFF6750A4), modifier = Modifier.size(36.dp))
+                        Text("No exams generated yet", color = Color(0xFF1C1B1F), fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                        Text("Generate a tailored multiple choice math test using AI!", color = Color(0xFF49454F), fontSize = 11.sp, textAlign = TextAlign.Center)
                     }
                 }
             }
@@ -405,7 +523,7 @@ fun DashboardScreen(viewModel: MathViewModel) {
         }
 
         item {
-            Text("Solved Questions History", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White, modifier = Modifier.padding(top = 8.dp))
+            Text("Solved Questions History", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1C1B1F), modifier = Modifier.padding(top = 8.dp))
         }
 
         if (savedQuestions.isEmpty()) {
@@ -413,7 +531,8 @@ fun DashboardScreen(viewModel: MathViewModel) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color(0xFF0E1324), RoundedCornerShape(12.dp))
+                        .background(Color.White, RoundedCornerShape(20.dp))
+                        .border(1.dp, Color(0xFFE7E0EC), RoundedCornerShape(20.dp))
                         .padding(24.dp),
                     contentAlignment = Alignment.Center
                 ) {
@@ -421,9 +540,9 @@ fun DashboardScreen(viewModel: MathViewModel) {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Icon(Icons.Default.History, contentDescription = "Empty", tint = Color(0xFF475569), modifier = Modifier.size(36.dp))
-                        Text("No questions solved yet", color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold)
-                        Text("Try typing or drawing a mathematical problem in AI Solver!", color = Color(0xFF64748B), fontSize = 11.sp, textAlign = TextAlign.Center)
+                        Icon(Icons.Default.History, contentDescription = "Empty", tint = Color(0xFF6750A4), modifier = Modifier.size(36.dp))
+                        Text("No questions solved yet", color = Color(0xFF1C1B1F), fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                        Text("Try typing or drawing a mathematical problem in AI Solver!", color = Color(0xFF49454F), fontSize = 11.sp, textAlign = TextAlign.Center)
                     }
                 }
             }
@@ -454,9 +573,9 @@ fun ExamPaperItem(
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF0E1324)),
-        border = BorderStroke(0.5.dp, Color(0xFF1E293B)),
-        shape = RoundedCornerShape(12.dp)
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        border = BorderStroke(1.dp, Color(0xFFE7E0EC)),
+        shape = RoundedCornerShape(20.dp)
     ) {
         Row(
             modifier = Modifier
@@ -469,7 +588,7 @@ fun ExamPaperItem(
                 modifier = Modifier
                     .size(40.dp)
                     .background(
-                        if (paper.isCompleted) Color(0xFF0B251E) else Color(0xFF2C220A),
+                        if (paper.isCompleted) Color(0xFFE8F5E9) else Color(0xFFFFF3E0),
                         CircleShape
                     ),
                 contentAlignment = Alignment.Center
@@ -477,7 +596,7 @@ fun ExamPaperItem(
                 Icon(
                     if (paper.isCompleted) Icons.Default.CheckCircle else Icons.Default.Pending,
                     contentDescription = "Status",
-                    tint = if (paper.isCompleted) Color(0xFF10B981) else Color(0xFFF59E0B),
+                    tint = if (paper.isCompleted) Color(0xFF2E7D32) else Color(0xFFE65100),
                     modifier = Modifier.size(20.dp)
                 )
             }
@@ -485,7 +604,7 @@ fun ExamPaperItem(
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = paper.title,
-                    color = Color.White,
+                    color = Color(0xFF1C1B1F),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
@@ -493,7 +612,7 @@ fun ExamPaperItem(
                 )
                 Text(
                     text = "${paper.grade} • ${paper.maxScore} Questions",
-                    color = Color(0xFF94A3B8),
+                    color = Color(0xFF49454F),
                     fontSize = 11.sp
                 )
             }
@@ -501,12 +620,12 @@ fun ExamPaperItem(
             if (paper.isCompleted) {
                 Box(
                     modifier = Modifier
-                        .background(Color(0xFF10B981).copy(alpha = 0.1f), RoundedCornerShape(8.dp))
+                        .background(Color(0xFFE8F5E9), RoundedCornerShape(8.dp))
                         .padding(horizontal = 8.dp, vertical = 4.dp)
                 ) {
                     Text(
                         text = "Score: ${paper.score}/${paper.maxScore}",
-                        color = Color(0xFF10B981),
+                        color = Color(0xFF2E7D32),
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Black
                     )
@@ -514,14 +633,14 @@ fun ExamPaperItem(
             } else {
                 Text(
                     text = "Practice",
-                    color = Color(0xFF06B6D4),
+                    color = Color(0xFF6750A4),
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Bold
                 )
             }
 
             IconButton(onClick = onDelete) {
-                Icon(Icons.Default.DeleteOutline, contentDescription = "Delete", tint = Color(0xFFEF4444), modifier = Modifier.size(18.dp))
+                Icon(Icons.Default.DeleteOutline, contentDescription = "Delete", tint = Color(0xFFBA1A1A), modifier = Modifier.size(18.dp))
             }
         }
     }
@@ -535,9 +654,9 @@ fun SavedQuestionItem(
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF0E1324)),
-        border = BorderStroke(0.5.dp, Color(0xFF1E293B)),
-        shape = RoundedCornerShape(12.dp)
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        border = BorderStroke(1.dp, Color(0xFFE7E0EC)),
+        shape = RoundedCornerShape(20.dp)
     ) {
         Row(
             modifier = Modifier
@@ -549,13 +668,13 @@ fun SavedQuestionItem(
             Box(
                 modifier = Modifier
                     .size(40.dp)
-                    .background(Color(0xFF1E2E4A), CircleShape),
+                    .background(Color(0xFFF3EDF7), CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     if (question.imageBase64 != null) Icons.Default.Image else Icons.Default.Calculate,
                     contentDescription = "Source",
-                    tint = Color(0xFF06B6D4),
+                    tint = Color(0xFF6750A4),
                     modifier = Modifier.size(18.dp)
                 )
             }
@@ -563,7 +682,7 @@ fun SavedQuestionItem(
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = question.questionText,
-                    color = Color.White,
+                    color = Color(0xFF1C1B1F),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
@@ -571,15 +690,15 @@ fun SavedQuestionItem(
                 )
                 Text(
                     text = "${question.topic} • ${question.gradeLevel}",
-                    color = Color(0xFF94A3B8),
+                    color = Color(0xFF49454F),
                     fontSize = 11.sp
                 )
             }
 
-            Icon(Icons.Default.ChevronRight, contentDescription = "View", tint = Color(0xFF94A3B8), modifier = Modifier.size(18.dp))
+            Icon(Icons.Default.ChevronRight, contentDescription = "View", tint = Color(0xFF49454F), modifier = Modifier.size(18.dp))
 
             IconButton(onClick = onDelete) {
-                Icon(Icons.Default.DeleteOutline, contentDescription = "Delete", tint = Color(0xFFEF4444), modifier = Modifier.size(18.dp))
+                Icon(Icons.Default.DeleteOutline, contentDescription = "Delete", tint = Color(0xFFBA1A1A), modifier = Modifier.size(18.dp))
             }
         }
     }
@@ -594,7 +713,7 @@ fun GradeSelectionDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Select Practice Grade Level", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold) },
+        title = { Text("Select Practice Grade Level", color = Color(0xFF1C1B1F), fontSize = 18.sp, fontWeight = FontWeight.Bold) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 val grades = listOf("Elementary School", "Middle School", "High School", "University")
@@ -604,7 +723,7 @@ fun GradeSelectionDialog(
                             .fillMaxWidth()
                             .clickable { onSelect(grade) }
                             .background(
-                                if (grade == currentGrade) Color(0xFF1E2E4A) else Color.Transparent,
+                                if (grade == currentGrade) Color(0xFFEADDFF) else Color.Transparent,
                                 RoundedCornerShape(8.dp)
                             )
                             .padding(12.dp),
@@ -613,10 +732,10 @@ fun GradeSelectionDialog(
                         RadioButton(
                             selected = (grade == currentGrade),
                             onClick = { onSelect(grade) },
-                            colors = RadioButtonDefaults.colors(selectedColor = Color(0xFF06B6D4), unselectedColor = Color(0xFF475569))
+                            colors = RadioButtonDefaults.colors(selectedColor = Color(0xFF6750A4), unselectedColor = Color(0xFF49454F))
                         )
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text(grade, color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                        Text(grade, color = Color(0xFF1C1B1F), fontSize = 14.sp, fontWeight = FontWeight.Bold)
                     }
                 }
             }
@@ -624,10 +743,10 @@ fun GradeSelectionDialog(
         confirmButton = {},
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel", color = Color(0xFF94A3B8))
+                Text("Cancel", color = Color(0xFF6750A4))
             }
         },
-        containerColor = Color(0xFF0E1324)
+        containerColor = Color(0xFFF3EDF7)
     )
 }
 
@@ -653,37 +772,41 @@ fun SolverScreen(viewModel: MathViewModel) {
         item { Spacer(modifier = Modifier.height(16.dp)) }
 
         item {
-            Text("Interactive AI Solver", fontSize = 22.sp, fontWeight = FontWeight.Black, color = Color.White)
-            Text("Type equations, load custom presets, or draw directly on the canvas below.", fontSize = 12.sp, color = Color(0xFF94A3B8))
+            Text("Interactive AI Solver", fontSize = 22.sp, fontWeight = FontWeight.Black, color = Color(0xFF1C1B1F))
+            Text("Type equations, load custom presets, or draw directly on the canvas below.", fontSize = 12.sp, color = Color(0xFF49454F))
         }
 
         // Segmented Tab Selector
         item {
             TabRow(
                 selectedTabIndex = activeInputTab,
-                containerColor = Color(0xFF0E1324),
-                contentColor = Color(0xFF06B6D4),
+                containerColor = Color(0xFFF3EDF7),
+                contentColor = Color(0xFF1D192B),
                 indicator = { tabPositions ->
                     TabRowDefaults.SecondaryIndicator(
                         modifier = Modifier.tabIndicatorOffset(tabPositions[activeInputTab]),
-                        color = Color(0xFF06B6D4)
+                        color = Color(0xFF6750A4)
                     )
                 },
                 modifier = Modifier
-                    .clip(RoundedCornerShape(12.dp))
-                    .border(0.5.dp, Color(0xFF1E293B), RoundedCornerShape(12.dp))
+                    .clip(RoundedCornerShape(20.dp))
+                    .border(1.dp, Color(0xFFE7E0EC), RoundedCornerShape(20.dp))
             ) {
                 Tab(
                     selected = activeInputTab == 0,
                     onClick = { activeInputTab = 0 },
                     text = { Text("Keyboard Input", fontWeight = FontWeight.Bold, fontSize = 13.sp) },
-                    icon = { Icon(Icons.Default.Keyboard, contentDescription = "Keyboard") }
+                    icon = { Icon(Icons.Default.Keyboard, contentDescription = "Keyboard") },
+                    selectedContentColor = Color(0xFF6750A4),
+                    unselectedContentColor = Color(0xFF49454F)
                 )
                 Tab(
                     selected = activeInputTab == 1,
                     onClick = { activeInputTab = 1 },
                     text = { Text("Sketch & Draw", fontWeight = FontWeight.Bold, fontSize = 13.sp) },
-                    icon = { Icon(Icons.Default.Draw, contentDescription = "Sketch") }
+                    icon = { Icon(Icons.Default.Draw, contentDescription = "Sketch") },
+                    selectedContentColor = Color(0xFF6750A4),
+                    unselectedContentColor = Color(0xFF49454F)
                 )
             }
         }
@@ -694,27 +817,27 @@ fun SolverScreen(viewModel: MathViewModel) {
                 OutlinedTextField(
                     value = questionText,
                     onValueChange = { viewModel.setSolverQuestionText(it) },
-                    label = { Text("Enter your Math equation/question...", color = Color(0xFF64748B)) },
-                    placeholder = { Text("e.g., Solve 2x + 5 = 15 or Integrate x^2 dx", color = Color(0xFF475569)) },
+                    label = { Text("Enter your Math equation/question...", color = Color(0xFF49454F)) },
+                    placeholder = { Text("e.g., Solve 2x + 5 = 15 or Integrate x^2 dx", color = Color(0xFF49454F).copy(alpha = 0.6f)) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .testTag("solver_input_field"),
                     maxLines = 4,
-                    shape = RoundedCornerShape(12.dp),
+                    shape = RoundedCornerShape(20.dp),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White,
-                        focusedBorderColor = Color(0xFF06B6D4),
-                        unfocusedBorderColor = Color(0xFF1E293B),
-                        focusedContainerColor = Color(0xFF0E1324),
-                        unfocusedContainerColor = Color(0xFF0E1324)
+                        focusedTextColor = Color(0xFF1C1B1F),
+                        unfocusedTextColor = Color(0xFF1C1B1F),
+                        focusedBorderColor = Color(0xFF6750A4),
+                        unfocusedBorderColor = Color(0xFFE7E0EC),
+                        focusedContainerColor = Color.White,
+                        unfocusedContainerColor = Color.White
                     )
                 )
             }
         } else {
             // Preset Equation Buttons for Quick Verification
             item {
-                Text("Preset Formulas (Quick Test)", color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                Text("Preset Formulas (Quick Test)", color = Color(0xFF1C1B1F), fontSize = 13.sp, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(4.dp))
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -786,9 +909,9 @@ fun SolverScreen(viewModel: MathViewModel) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(280.dp)
-                        .border(1.dp, Color(0xFF1E2E4A), RoundedCornerShape(16.dp)),
+                        .border(1.dp, Color(0xFFE7E0EC), RoundedCornerShape(20.dp)),
                     colors = CardDefaults.cardColors(containerColor = Color.White), // Standard white canvas sheet
-                    shape = RoundedCornerShape(16.dp)
+                    shape = RoundedCornerShape(20.dp)
                 ) {
                     Box(modifier = Modifier.fillMaxSize()) {
                         Canvas(
@@ -876,7 +999,7 @@ fun SolverScreen(viewModel: MathViewModel) {
                             IconButton(
                                 onClick = { viewModel.clearCanvas() },
                                 modifier = Modifier
-                                    .background(Color(0xFFEF4444), CircleShape)
+                                    .background(Color(0xFFBA1A1A), CircleShape)
                                     .size(36.dp)
                             ) {
                                 Icon(Icons.Default.Clear, contentDescription = "Clear Canvas", tint = Color.White, modifier = Modifier.size(18.dp))
@@ -886,7 +1009,7 @@ fun SolverScreen(viewModel: MathViewModel) {
                         if (strokes.isEmpty()) {
                             Text(
                                 text = "Use your pointer/finger to sketch formulas here.",
-                                color = Color(0xFF94A3B8),
+                                color = Color(0xFF49454F),
                                 fontSize = 12.sp,
                                 modifier = Modifier
                                     .align(Alignment.Center)
@@ -907,8 +1030,8 @@ fun SolverScreen(viewModel: MathViewModel) {
                     .fillMaxWidth()
                     .height(52.dp)
                     .testTag("solve_equation_button"),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF06B6D4)),
-                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6750A4)),
+                shape = RoundedCornerShape(20.dp),
                 enabled = !isLoading && (questionText.isNotBlank() || strokes.isNotEmpty())
             ) {
                 if (isLoading) {
@@ -934,9 +1057,9 @@ fun SolverScreen(viewModel: MathViewModel) {
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF0E1324)),
-                    border = BorderStroke(1.dp, Color(0xFF1E2E4A)),
-                    shape = RoundedCornerShape(16.dp)
+                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    border = BorderStroke(1.dp, Color(0xFFE7E0EC)),
+                    shape = RoundedCornerShape(20.dp)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Row(
@@ -944,22 +1067,22 @@ fun SolverScreen(viewModel: MathViewModel) {
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                             modifier = Modifier.padding(bottom = 12.dp)
                         ) {
-                            Icon(Icons.Default.School, contentDescription = "Coaching", tint = Color(0xFF10B981), modifier = Modifier.size(22.dp))
-                            Text("AI Coach Explanation", color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                            Icon(Icons.Default.School, contentDescription = "Coaching", tint = Color(0xFF6750A4), modifier = Modifier.size(22.dp))
+                            Text("AI Coach Explanation", color = Color(0xFF1C1B1F), fontSize = 16.sp, fontWeight = FontWeight.Bold)
                         }
 
                         if (explanation == "API_KEY_MISSING_ERROR") {
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .background(Color(0xFF2C1E1E), RoundedCornerShape(8.dp))
+                                    .background(Color(0xFFFFDAD7), RoundedCornerShape(12.dp))
                                     .padding(12.dp)
                             ) {
                                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                                    Text("🔑 API Key Missing", color = Color(0xFFEF4444), fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                                    Text("🔑 API Key Missing", color = Color(0xFF410002), fontWeight = FontWeight.Bold, fontSize = 14.sp)
                                     Text(
                                         text = "Please enter your GEMINI_API_KEY into the Secrets panel in AI Studio UI to enable real-time calculations.",
-                                        color = Color(0xFFFCA5A5),
+                                        color = Color(0xFF410002),
                                         fontSize = 12.sp
                                     )
                                 }
@@ -980,7 +1103,7 @@ fun SolverScreen(viewModel: MathViewModel) {
 fun PresetBadge(title: String, onClick: () -> Unit) {
     Box(
         modifier = Modifier
-            .background(Color(0xFF1E2E4A), RoundedCornerShape(16.dp))
+            .background(Color(0xFFEADDFF), RoundedCornerShape(16.dp))
             .clickable { onClick() }
             .padding(horizontal = 12.dp, vertical = 6.dp)
     ) {
@@ -988,8 +1111,8 @@ fun PresetBadge(title: String, onClick: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            Icon(Icons.Default.Add, contentDescription = "Add", tint = Color(0xFF06B6D4), modifier = Modifier.size(12.dp))
-            Text(title, color = Color.White, fontSize = 11.sp, fontWeight = FontWeight.Bold)
+            Icon(Icons.Default.Add, contentDescription = "Add", tint = Color(0xFF21005D), modifier = Modifier.size(12.dp))
+            Text(title, color = Color(0xFF21005D), fontSize = 11.sp, fontWeight = FontWeight.Bold)
         }
     }
 }
@@ -1013,13 +1136,13 @@ fun GeneratorScreen(viewModel: MathViewModel) {
         item { Spacer(modifier = Modifier.height(16.dp)) }
 
         item {
-            Text("AI Test Paper Generator", fontSize = 22.sp, fontWeight = FontWeight.Black, color = Color.White)
-            Text("Create custom multiple choice tests with instant real-time AI grading reports.", fontSize = 12.sp, color = Color(0xFF94A3B8))
+            Text("AI Test Paper Generator", fontSize = 22.sp, fontWeight = FontWeight.Black, color = Color(0xFF1C1B1F))
+            Text("Create custom multiple choice tests with instant real-time AI grading reports.", fontSize = 12.sp, color = Color(0xFF49454F))
         }
 
         // Grade Selector
         item {
-            Text("Target Academic Grade Level", color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+            Text("Target Academic Grade Level", color = Color(0xFF1C1B1F), fontSize = 14.sp, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(8.dp))
             val grades = listOf("Elementary School", "Middle School", "High School", "University")
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -1033,7 +1156,7 @@ fun GeneratorScreen(viewModel: MathViewModel) {
 
         // Topic Selector
         item {
-            Text("Mathematics Topic", color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+            Text("Mathematics Topic", color = Color(0xFF1C1B1F), fontSize = 14.sp, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(8.dp))
             val topics = listOf("Algebra", "Calculus", "Geometry", "Trigonometry", "Statistics")
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -1047,7 +1170,7 @@ fun GeneratorScreen(viewModel: MathViewModel) {
 
         // Difficulty Selector
         item {
-            Text("Difficulty Tier", color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+            Text("Difficulty Tier", color = Color(0xFF1C1B1F), fontSize = 14.sp, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(8.dp))
             val diffs = listOf("Easy", "Medium", "Hard")
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -1056,19 +1179,19 @@ fun GeneratorScreen(viewModel: MathViewModel) {
                         modifier = Modifier
                             .weight(1f)
                             .background(
-                                if (item == diff) Color(0xFF1E2E4A) else Color(0xFF0E1324),
-                                RoundedCornerShape(12.dp)
+                                if (item == diff) Color(0xFFEADDFF) else Color.White,
+                                RoundedCornerShape(20.dp)
                             )
                             .border(
                                 1.dp,
-                                if (item == diff) Color(0xFF06B6D4) else Color(0xFF1E293B),
-                                RoundedCornerShape(12.dp)
+                                if (item == diff) Color(0xFF6750A4) else Color(0xFFE7E0EC),
+                                RoundedCornerShape(20.dp)
                             )
                             .clickable { viewModel.setGeneratorDifficulty(item) }
                             .padding(vertical = 12.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(item, color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                        Text(item, color = if (item == diff) Color(0xFF21005D) else Color(0xFF49454F), fontSize = 13.sp, fontWeight = FontWeight.Bold)
                     }
                 }
             }
@@ -1076,7 +1199,7 @@ fun GeneratorScreen(viewModel: MathViewModel) {
 
         // Count Selector
         item {
-            Text("Number of Questions", color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+            Text("Number of Questions", color = Color(0xFF1C1B1F), fontSize = 14.sp, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(8.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 listOf(3, 5, 8).forEach { item ->
@@ -1084,19 +1207,19 @@ fun GeneratorScreen(viewModel: MathViewModel) {
                         modifier = Modifier
                             .weight(1f)
                             .background(
-                                if (item == count) Color(0xFF1E2E4A) else Color(0xFF0E1324),
-                                RoundedCornerShape(12.dp)
+                                if (item == count) Color(0xFFEADDFF) else Color.White,
+                                RoundedCornerShape(20.dp)
                             )
                             .border(
                                 1.dp,
-                                if (item == count) Color(0xFF06B6D4) else Color(0xFF1E293B),
-                                RoundedCornerShape(12.dp)
+                                if (item == count) Color(0xFF6750A4) else Color(0xFFE7E0EC),
+                                RoundedCornerShape(20.dp)
                             )
                             .clickable { viewModel.setGeneratorCount(item) }
                             .padding(vertical = 12.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text("$item Questions", color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                        Text("$item Questions", color = if (item == count) Color(0xFF21005D) else Color(0xFF49454F), fontSize = 13.sp, fontWeight = FontWeight.Bold)
                     }
                 }
             }
@@ -1108,14 +1231,14 @@ fun GeneratorScreen(viewModel: MathViewModel) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color(0xFF2C1E1E), RoundedCornerShape(12.dp))
+                        .background(Color(0xFFFFDAD7), RoundedCornerShape(12.dp))
                         .padding(16.dp)
                 ) {
                     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                        Text("🔑 API Error Configuration" , color = Color(0xFFEF4444), fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                        Text("🔑 API Error Configuration" , color = Color(0xFF410002), fontWeight = FontWeight.Bold, fontSize = 14.sp)
                         Text(
                             text = if (error == "API_KEY_MISSING") "Please enter your GEMINI_API_KEY in the Secrets panel in AI Studio UI to generate customized practice exams." else error ?: "",
-                            color = Color(0xFFFCA5A5),
+                            color = Color(0xFF410002),
                             fontSize = 12.sp
                         )
                     }
@@ -1131,8 +1254,8 @@ fun GeneratorScreen(viewModel: MathViewModel) {
                     .fillMaxWidth()
                     .height(52.dp)
                     .testTag("generate_paper_btn"),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF06B6D4)),
-                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6750A4)),
+                shape = RoundedCornerShape(20.dp),
                 enabled = !isLoading
             ) {
                 if (isLoading) {
@@ -1162,18 +1285,18 @@ fun GradeSelectorBadge(
     Box(
         modifier = Modifier
             .background(
-                if (isSelected) Color(0xFF1E2E4A) else Color(0xFF0E1324),
-                RoundedCornerShape(16.dp)
+                if (isSelected) Color(0xFFEADDFF) else Color.White,
+                RoundedCornerShape(20.dp)
             )
             .border(
                 1.dp,
-                if (isSelected) Color(0xFF06B6D4) else Color(0xFF1E293B),
-                RoundedCornerShape(16.dp)
+                if (isSelected) Color(0xFF6750A4) else Color(0xFFE7E0EC),
+                RoundedCornerShape(20.dp)
             )
             .clickable { onClick() }
             .padding(horizontal = 14.dp, vertical = 8.dp)
     ) {
-        Text(title, color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+        Text(title, color = if (isSelected) Color(0xFF21005D) else Color(0xFF49454F), fontSize = 12.sp, fontWeight = FontWeight.Bold)
     }
 }
 
@@ -1228,9 +1351,9 @@ fun ActiveExamScreen(viewModel: MathViewModel) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = { viewModel.navigateTo(MathScreen.DASHBOARD) }) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color(0xFF1C1B1F))
                 }
-                Text("Exam Practice Sheet", color = Color.White, fontSize = 15.sp, fontWeight = FontWeight.Black)
+                Text("Exam Practice Sheet", color = Color(0xFF1C1B1F), fontSize = 15.sp, fontWeight = FontWeight.Black)
                 Box(modifier = Modifier.size(24.dp)) // Spacer
             }
         }
@@ -1238,12 +1361,13 @@ fun ActiveExamScreen(viewModel: MathViewModel) {
         item {
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFF0E1324)),
-                border = BorderStroke(0.5.dp, Color(0xFF1E2E4A))
+                colors = CardDefaults.cardColors(containerColor = Color.White),
+                border = BorderStroke(1.dp, Color(0xFFE7E0EC)),
+                shape = RoundedCornerShape(20.dp)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Text(currentPaper.title, fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                    Text("${currentPaper.grade} • ${questions.size} Multiple Choice Questions", fontSize = 12.sp, color = Color(0xFF94A3B8))
+                    Text(currentPaper.title, fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1C1B1F))
+                    Text("${currentPaper.grade} • ${questions.size} Multiple Choice Questions", fontSize = 12.sp, color = Color(0xFF49454F))
                 }
             }
         }
@@ -1255,9 +1379,9 @@ fun ActiveExamScreen(viewModel: MathViewModel) {
 
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFF0E1324)),
-                border = BorderStroke(0.5.dp, Color(0xFF1E293B)),
-                shape = RoundedCornerShape(16.dp)
+                colors = CardDefaults.cardColors(containerColor = Color.White),
+                border = BorderStroke(1.dp, Color(0xFFE7E0EC)),
+                shape = RoundedCornerShape(20.dp)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     // Question text header
@@ -1268,14 +1392,14 @@ fun ActiveExamScreen(viewModel: MathViewModel) {
                         Box(
                             modifier = Modifier
                                 .size(24.dp)
-                                .background(Color(0xFF06B6D4), CircleShape),
+                                .background(Color(0xFF6750A4), CircleShape),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text("${index + 1}", color = Color.Black, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                            Text("${index + 1}", color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                         }
                         Text(
                             text = item.question,
-                            color = Color.White,
+                            color = Color(0xFF1C1B1F),
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold,
                             lineHeight = 20.sp
@@ -1291,13 +1415,13 @@ fun ActiveExamScreen(viewModel: MathViewModel) {
                                     .fillMaxWidth()
                                     .clickable { viewModel.setExamAnswer(index, option) }
                                     .background(
-                                        if (isSelected) Color(0xFF1E2E4A) else Color(0xFF141A2E),
-                                        RoundedCornerShape(8.dp)
+                                        if (isSelected) Color(0xFFEADDFF) else Color(0xFFF3EDF7),
+                                        RoundedCornerShape(12.dp)
                                     )
                                     .border(
-                                        0.5.dp,
-                                        if (isSelected) Color(0xFF06B6D4) else Color(0xFF1E293B),
-                                        RoundedCornerShape(8.dp)
+                                        1.dp,
+                                        if (isSelected) Color(0xFF6750A4) else Color(0xFFE7E0EC),
+                                        RoundedCornerShape(12.dp)
                                     )
                                     .padding(12.dp),
                                 verticalAlignment = Alignment.CenterVertically
@@ -1305,10 +1429,10 @@ fun ActiveExamScreen(viewModel: MathViewModel) {
                                 RadioButton(
                                     selected = isSelected,
                                     onClick = { viewModel.setExamAnswer(index, option) },
-                                    colors = RadioButtonDefaults.colors(selectedColor = Color(0xFF06B6D4), unselectedColor = Color(0xFF475569))
+                                    colors = RadioButtonDefaults.colors(selectedColor = Color(0xFF6750A4), unselectedColor = Color(0xFF49454F))
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
-                                Text(option, color = Color.White, fontSize = 13.sp)
+                                Text(option, color = Color(0xFF1C1B1F), fontSize = 13.sp)
                             }
                         }
                     }
@@ -1324,8 +1448,8 @@ fun ActiveExamScreen(viewModel: MathViewModel) {
                     .fillMaxWidth()
                     .height(52.dp)
                     .testTag("submit_exam_grading_btn"),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF10B981)),
-                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E7D32)),
+                shape = RoundedCornerShape(20.dp),
                 enabled = !gradingLoading && answers.size == questions.size
             ) {
                 if (gradingLoading) {
@@ -1373,25 +1497,28 @@ fun ExamResultScreen(viewModel: MathViewModel) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = { viewModel.navigateTo(MathScreen.DASHBOARD) }) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color(0xFF1C1B1F))
                 }
-                Text("AI Grading Certificate", color = Color.White, fontSize = 15.sp, fontWeight = FontWeight.Black)
+                Text("AI Grading Certificate", color = Color(0xFF1C1B1F), fontSize = 15.sp, fontWeight = FontWeight.Black)
                 Box(modifier = Modifier.size(24.dp))
             }
         }
 
         // High Score Metric Dashboard
         item {
+            val themeGreen = Color(0xFF2E7D32)
+            val themeRed = Color(0xFFBA1A1A)
+            val isSuccess = scorePercent >= 70
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(
-                    containerColor = if (scorePercent >= 70) Color(0xFF0E242C) else Color(0xFF241512)
+                    containerColor = if (isSuccess) Color(0xFFE8F5E9) else Color(0xFFFFDAD7)
                 ),
                 border = BorderStroke(
                     1.dp,
-                    if (scorePercent >= 70) Color(0xFF10B981) else Color(0xFFEF4444)
+                    if (isSuccess) themeGreen else themeRed
                 ),
-                shape = RoundedCornerShape(16.dp)
+                shape = RoundedCornerShape(20.dp)
             ) {
                 Column(
                     modifier = Modifier.padding(20.dp),
@@ -1399,26 +1526,26 @@ fun ExamResultScreen(viewModel: MathViewModel) {
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Icon(
-                        if (scorePercent >= 70) Icons.Default.EmojiEvents else Icons.Default.Warning,
+                        if (isSuccess) Icons.Default.EmojiEvents else Icons.Default.Warning,
                         contentDescription = "Trophy",
-                        tint = if (scorePercent >= 70) Color(0xFF10B981) else Color(0xFFEF4444),
+                        tint = if (isSuccess) themeGreen else themeRed,
                         modifier = Modifier.size(48.dp)
                     )
                     Text(
-                        text = if (scorePercent >= 70) "Magnificent Effort!" else "Keep practicing to improve!",
-                        color = Color.White,
+                        text = if (isSuccess) "Magnificent Effort!" else "Keep practicing to improve!",
+                        color = if (isSuccess) themeGreen else themeRed,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Black
                     )
                     Text(
                         text = "Score Certificate: ${currentPaper.score} / ${currentPaper.maxScore}",
-                        color = Color.White,
+                        color = Color(0xFF1C1B1F),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = "Academic accuracy tier: $scorePercent%",
-                        color = if (scorePercent >= 70) Color(0xFF10B981) else Color(0xFFEF4444),
+                        color = if (isSuccess) themeGreen else themeRed,
                         fontSize = 13.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -1430,9 +1557,9 @@ fun ExamResultScreen(viewModel: MathViewModel) {
         item {
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFF0E1324)),
-                border = BorderStroke(0.5.dp, Color(0xFF1E2E4A)),
-                shape = RoundedCornerShape(16.dp)
+                colors = CardDefaults.cardColors(containerColor = Color.White),
+                border = BorderStroke(1.dp, Color(0xFFE7E0EC)),
+                shape = RoundedCornerShape(20.dp)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
@@ -1440,8 +1567,8 @@ fun ExamResultScreen(viewModel: MathViewModel) {
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         modifier = Modifier.padding(bottom = 12.dp)
                     ) {
-                        Icon(Icons.Default.AssignmentTurnedIn, contentDescription = "Report", tint = Color(0xFF06B6D4), modifier = Modifier.size(22.dp))
-                        Text("AI Grader Coaching Report", color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                        Icon(Icons.Default.AssignmentTurnedIn, contentDescription = "Report", tint = Color(0xFF6750A4), modifier = Modifier.size(22.dp))
+                        Text("AI Grader Coaching Report", color = Color(0xFF1C1B1F), fontSize = 16.sp, fontWeight = FontWeight.Bold)
                     }
 
                     MarkdownText(text = currentPaper.feedbackJson ?: "Generating report card...")
@@ -1452,11 +1579,11 @@ fun ExamResultScreen(viewModel: MathViewModel) {
         item {
             Button(
                 onClick = { viewModel.navigateTo(MathScreen.DASHBOARD) },
-                modifier = Modifier.fillMaxWidth().height(48.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1E293B)),
-                shape = RoundedCornerShape(12.dp)
+                modifier = Modifier.fillMaxWidth().height(52.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFEADDFF)),
+                shape = RoundedCornerShape(20.dp)
             ) {
-                Text("Return to Dashboard", color = Color.White, fontWeight = FontWeight.Bold)
+                Text("Return to Dashboard", color = Color(0xFF21005D), fontWeight = FontWeight.Bold)
             }
         }
 
@@ -1484,21 +1611,21 @@ fun StatsScreen(viewModel: MathViewModel) {
         item { Spacer(modifier = Modifier.height(16.dp)) }
 
         item {
-            Text("Statistics & Achievements", fontSize = 22.sp, fontWeight = FontWeight.Black, color = Color.White)
-            Text("Visual tracking of your mathematical accuracy, practice habits and streak milestones.", fontSize = 12.sp, color = Color(0xFF94A3B8))
+            Text("Statistics & Achievements", fontSize = 22.sp, fontWeight = FontWeight.Black, color = Color(0xFF1C1B1F))
+            Text("Visual tracking of your mathematical accuracy, practice habits and streak milestones.", fontSize = 12.sp, color = Color(0xFF49454F))
         }
 
         // Interactive Canvas Line Chart showing practice trends
         item {
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFF0E1324)),
-                border = BorderStroke(0.5.dp, Color(0xFF1E2E4A)),
-                shape = RoundedCornerShape(16.dp)
+                colors = CardDefaults.cardColors(containerColor = Color.White),
+                border = BorderStroke(1.dp, Color(0xFFE7E0EC)),
+                shape = RoundedCornerShape(20.dp)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Text("Accuracy Trend History", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                    Text("Visual progress timeline across recent equations solved.", fontSize = 11.sp, color = Color(0xFF94A3B8))
+                    Text("Accuracy Trend History", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1C1B1F))
+                    Text("Visual progress timeline across recent equations solved.", fontSize = 11.sp, color = Color(0xFF49454F))
                     Spacer(modifier = Modifier.height(16.dp))
 
                     Canvas(
@@ -1511,7 +1638,7 @@ fun StatsScreen(viewModel: MathViewModel) {
                         for (i in 0..verticalGridCount) {
                             val y = size.height * (i.toFloat() / verticalGridCount)
                             drawLine(
-                                color = Color(0xFF1E293B),
+                                color = Color(0xFFE7E0EC),
                                 start = Offset(0f, y),
                                 end = Offset(size.width, y),
                                 strokeWidth = 1f
@@ -1523,7 +1650,7 @@ fun StatsScreen(viewModel: MathViewModel) {
                         val wavePath = Path()
                         val pointsCount = 20
                         val gradientBrush = Brush.verticalGradient(
-                            colors = listOf(Color(0x3D06B6D4), Color.Transparent),
+                            colors = listOf(Color(0x3D6750A4), Color.Transparent),
                             startY = 0f,
                             endY = size.height
                         )
@@ -1557,7 +1684,7 @@ fun StatsScreen(viewModel: MathViewModel) {
                         // Draw glowing line
                         drawPath(
                             path = wavePath,
-                            color = Color(0xFF06B6D4),
+                            color = Color(0xFF6750A4),
                             style = DrawScopeStroke(width = 3.dp.toPx(), cap = StrokeCap.Round)
                         )
                     }
@@ -1566,8 +1693,8 @@ fun StatsScreen(viewModel: MathViewModel) {
                         modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text("Day 1", fontSize = 10.sp, color = Color(0xFF475569))
-                        Text("Today", fontSize = 10.sp, color = Color(0xFF06B6D4), fontWeight = FontWeight.Bold)
+                        Text("Day 1", fontSize = 10.sp, color = Color(0xFF49454F))
+                        Text("Today", fontSize = 10.sp, color = Color(0xFF6750A4), fontWeight = FontWeight.Bold)
                     }
                 }
             }
@@ -1575,7 +1702,7 @@ fun StatsScreen(viewModel: MathViewModel) {
 
         // Achievements Milestones List
         item {
-            Text("Your Achievement Badges", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
+            Text("Your Achievement Badges", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1C1B1F))
         }
 
         item {
@@ -1643,13 +1770,13 @@ fun AchievementCard(
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = if (unlocked) Color(0xFF0E1F24) else Color(0xFF0E1324)
+            containerColor = if (unlocked) Color(0xFFF3EDF7) else Color.White
         ),
         border = BorderStroke(
-            0.5.dp,
-            if (unlocked) Color(0xFF06B6D4) else Color(0xFF1E293B)
+            1.dp,
+            if (unlocked) Color(0xFFEADDFF) else Color(0xFFE7E0EC)
         ),
-        shape = RoundedCornerShape(16.dp)
+        shape = RoundedCornerShape(20.dp)
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -1660,7 +1787,7 @@ fun AchievementCard(
                 modifier = Modifier
                     .size(44.dp)
                     .background(
-                        if (unlocked) Color(0xFF155361) else Color(0xFF1E293B),
+                        if (unlocked) Color(0xFFEADDFF) else Color(0xFFF3EDF7),
                         CircleShape
                     ),
                 contentAlignment = Alignment.Center
@@ -1668,7 +1795,7 @@ fun AchievementCard(
                 Icon(
                     icon,
                     contentDescription = title,
-                    tint = if (unlocked) Color(0xFF06B6D4) else Color(0xFF475569),
+                    tint = if (unlocked) Color(0xFF21005D) else Color(0xFF49454F),
                     modifier = Modifier.size(22.dp)
                 )
             }
@@ -1676,12 +1803,12 @@ fun AchievementCard(
                 text = title,
                 fontSize = 13.sp,
                 fontWeight = FontWeight.Bold,
-                color = if (unlocked) Color.White else Color(0xFF475569)
+                color = Color(0xFF1C1B1F)
             )
             Text(
                 text = desc,
                 fontSize = 10.sp,
-                color = if (unlocked) Color(0xFF94A3B8) else Color(0xFF475569),
+                color = Color(0xFF49454F),
                 textAlign = TextAlign.Center,
                 lineHeight = 14.sp
             )
@@ -1694,7 +1821,7 @@ fun AchievementCard(
 fun MarkdownText(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = Color.White
+    color: Color = Color(0xFF49454F)
 ) {
     val lines = text.split("\n")
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -1706,7 +1833,7 @@ fun MarkdownText(
                         text = trimmed.removePrefix("### "),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color(0xFF06B6D4),
+                        color = Color(0xFF6750A4),
                         modifier = Modifier.padding(top = 6.dp, bottom = 2.dp)
                     )
                 }
@@ -1715,7 +1842,7 @@ fun MarkdownText(
                         text = trimmed.removePrefix("## "),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.ExtraBold,
-                        color = Color(0xFF10B981),
+                        color = Color(0xFF2E7D32),
                         modifier = Modifier.padding(top = 10.dp, bottom = 4.dp)
                     )
                 }
@@ -1724,7 +1851,7 @@ fun MarkdownText(
                         text = trimmed.removePrefix("# "),
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Black,
-                        color = Color(0xFF06B6D4),
+                        color = Color(0xFF6750A4),
                         modifier = Modifier.padding(top = 14.dp, bottom = 6.dp)
                     )
                 }
@@ -1734,7 +1861,7 @@ fun MarkdownText(
                             text = "• ",
                             fontSize = 15.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF06B6D4)
+                            color = Color(0xFF6750A4)
                         )
                         Text(
                             text = parseBoldMarkdown(trimmed.substring(2)),
@@ -1753,7 +1880,7 @@ fun MarkdownText(
                             text = number,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF06B6D4)
+                            color = Color(0xFF6750A4)
                         )
                         Text(
                             text = parseBoldMarkdown(content),
@@ -1795,7 +1922,7 @@ fun parseBoldMarkdown(text: String): AnnotatedString {
                 append(text.substring(start))
                 break
             }
-            pushStyle(SpanStyle(fontWeight = FontWeight.Bold, color = Color(0xFF06B6D4)))
+            pushStyle(SpanStyle(fontWeight = FontWeight.Bold, color = Color(0xFF6750A4)))
             append(text.substring(start + 2, end))
             pop()
             cursor = end + 2
